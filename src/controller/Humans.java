@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Humans {
     protected String name;
     protected String lastName;
-    protected String gender;
+    protected Gender gender;
     protected String status;
 
     public static final ArrayList<Humans> emplList = new ArrayList<Humans>();
     public static final ArrayList<Humans> buyerList = new ArrayList<Humans>();
 
-    public Humans(String name, String lastName, String gender, String status) {
+    public Humans(String name, String lastName, Gender gender, String status) {
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
@@ -29,7 +29,7 @@ public class Humans {
         return lastName;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -45,7 +45,7 @@ public class Humans {
         this.lastName = lastName;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -64,6 +64,7 @@ public class Humans {
     public String toString() {
         return String.format("Name: %s, LastName: %s, Gender: %s",name, lastName, gender);
     }
+
 
     //    public String toString(){
 //        return "Status: " + status + '\n' +

@@ -1,6 +1,6 @@
-package controller.impl;
+package controller;
 
-public class Gender{
+public class Gender1 {
     public static final String male = "Male";
     public static final String female = "Female";
 }

@@ -1,14 +1,16 @@
 package view;
 
-import controller.Humans;
+import controller.*;
 
 import static controller.Humans.buyerList;
-
-import controller.Products;
+import static controller.Humans.emplList;
+import static controller.Products.productList;
 
 import controller.impl.*;
-import controller.Orders;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +19,11 @@ public class Application {
     private static final Products product = new Products();
     private static final Humans human = new Humans();
     private static final Orders order = new Orders();
+    private static final ArrayList<List> orderList = new ArrayList<>();
     private static Random random = new Random();
+    private static final Date thisDay = new Date();
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
+
 
     public static void app() {
         System.out.println("Hello world!!!\n");
@@ -25,15 +31,15 @@ public class Application {
     }
 
     public static void run() {
-        Humans humans1 = new Employee("Anton", "Gusev", Gender.male, "Employee");
-        Humans humans2 = new Buyer("Sergey", "Gusev", Gender.male, "Buyer");
-        Humans humans3 = new Employee("Alexsander", "Ozerov", Gender.male, "Employee");
-        Humans humans4 = new Buyer("Nataliya", "Guseva", Gender.female, "Buyer");
-        Humans humans5 = new Employee("Tatyana", "Shanygina", Gender.female, "Employee");
-        Humans humans6 = new Buyer("Alexey", "Kazennov", Gender.male, "Buyer");
-        Humans humans7 = new Employee("Evgeniy", "Sobolev", Gender.male, "Employee");
-        Humans humans8 = new Buyer("Ekaterina", "Guseva", Gender.female, "Buyer");
-        Humans humans9 = new Buyer("Varvara", "Guseva", Gender.male , "Buyer");
+        Humans humans1 = new Employee("Anton", "Gusev", Gender.MALE, "Employee");
+        Humans humans2 = new Buyer("Sergey", "Gusev", Gender.MALE, "Buyer");
+        Humans humans3 = new Employee("Alexsander", "Ozerov", Gender.MALE, "Employee");
+        Humans humans4 = new Buyer("Nataliya", "Guseva", Gender.FAMALE, "Buyer");
+        Humans humans5 = new Employee("Tatyana", "Shanygina", Gender.FAMALE, "Employee");
+        Humans humans6 = new Buyer("Alexey", "Kazennov", Gender.MALE, "Buyer");
+        Humans humans7 = new Employee("Evgeniy", "Sobolev", Gender.MALE, "Employee");
+        Humans humans8 = new Buyer("Ekaterina", "Guseva", Gender.FAMALE, "Buyer");
+        Humans humans9 = new Buyer("Varvara", "Guseva", Gender.FAMALE, "Buyer");
         human.addHumansList(humans1);
         human.addHumansList(humans2);
         human.addHumansList(humans3);
@@ -77,17 +83,53 @@ public class Application {
 //        System.out.println("---***---***---***---");
 //        System.out.println("List Foods:");
 //        printProductList(foodsList);
+        int index = 0;
+        int count = 0;
         System.out.println("---***---***---***---");
-        System.out.println("Create order:");
-        int index = random.nextInt(0, buyerList.size());
-        runOrders(buyerList, index);
+        System.out.println("Create order #1:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("---***---***---***---");
+        System.out.println("Create order #2:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("---***---***---***---");
+        System.out.println("Create order #3:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("---***---***---***---");
+        System.out.println("Create order #4:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("---***---***---***---");
+        System.out.println("Create order #5:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("---***---***---***---");
+        System.out.println("Create order #6:");
+        index = random.nextInt(-10, buyerList.size() + 5);
+        count = new Random().nextInt(-10, productList.size());
+        runOrders(buyerList, index, count);
+        System.out.println("\nList oders: \n");
+        printOrderList(orderList);
+        System.out.println("\n*************************\n");
+        System.out.println("Проверка на праздник");
+        checkHolyday();
 
     }
 
-    public static void runOrders(List<Humans> humanList, int xHuman) {
-        String result = "";
-        result = String.valueOf(order.createOrders1(humanList, xHuman)).replace("[", "").replace("]", "");
-        System.out.println(result);
+    public static void runOrders(List<Humans> humanList, int xHuman, int count) {
+//        String result = "";
+//        result = String.valueOf(order.createOrders(humanList, xHuman, count)).replace("[", "").replace("]", "");
+//        System.out.println(result);
+        if (!order.createOrders(humanList, xHuman, count).isEmpty()) {
+            orderList.add(order.createOrders(humanList, xHuman, count));
+        }
 
     }
 
@@ -97,9 +139,44 @@ public class Application {
         }
     }
 
+    public static void printOrderList(List<List> orderList){
+        if (!orderList.isEmpty()) {
+            for (List x : orderList) {
+                System.out.println(x.;);
+            }
+        }else{
+            System.out.println("Лист покупателей сделавших покупки пуст");
+        }
+    }
+
     public static void printProductList(List<Products> products) {
         for (Products product : products) {
             System.out.println(product);
         }
     }
-} 
+
+    public static void checkHolyday() {
+        if (thisDay.getDate() == 8 && thisDay.getMonth() == 2 || thisDay.getDate() == 23 && thisDay.getMonth() == 1 || thisDay.getDate() == 31 && thisDay.getMonth() == 11) {
+            for (int i = 0; i < emplList.size(); i++) {
+                if (thisDay.getDate() == 8 && thisDay.getMonth() == 2) {
+                    if (emplList.get(i).getGender() == Gender.FAMALE) {
+                        System.out.println(emplList.get(i).getName() + " Поздравляем Вас с праздником. 8 марта");
+                    }
+                } else if (thisDay.getDate() == 23 && thisDay.getMonth() == 1) {
+                    if (emplList.get(i).getGender() == Gender.FAMALE) {
+                        System.out.println(emplList.get(i).getName() + " Поздравляем с праздником. 23 февраля");
+                    }
+                } else if (thisDay.getDate() == 31 && thisDay.getMonth() == 11) {
+                    System.out.println(emplList.get(i).getName() + " Поздравляем Вас с праздником. Новый год!!!");
+                }
+            }
+        } else {
+
+            System.out.println("Сегодня: " + formatter.format(thisDay));
+            System.out.println("Сегодня нет праздников");
+        }
+
+    }
+
+}
+
